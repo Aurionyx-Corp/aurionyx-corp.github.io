@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Aurionyx</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+<nav>
+  <a href="index.html" class="logo">🌊 Aurionyx</a>
+  <div class="nav-links">
+    <a href="index.html" data-i18n="nav_home">Главная</a>
+    <a href="apps.html" data-i18n="nav_apps">Приложения</a>
+    <a href="feedback.html" data-i18n="nav_feedback">Отзывы</a>
+    <a href="support.html" data-i18n="nav_support">Поддержка</a>
+    <a href="about.html" class="active" data-i18n="nav_about">О проекте</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" id="themeBtn" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtn" onclick="toggleLang()">RU</button>
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+  <a href="index.html" data-i18n="nav_home">Главная</a>
+  <a href="apps.html" data-i18n="nav_apps">Приложения</a>
+  <a href="feedback.html" data-i18n="nav_feedback">Отзывы</a>
+  <a href="support.html" data-i18n="nav_support">Поддержка</a>
+  <a href="about.html" class="active" data-i18n="nav_about">О проекте</a>
+  <div style="display:flex; gap:12px; margin-top:24px;">
+    <button class="nav-btn" id="themeBtnMobile" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtnMobile" onclick="toggleLang()">RU</button>
+  </div>
+</div>
+
+<section class="section container" style="padding-top: 40px;">
+  <h1 class="section-title" data-i18n="about_title">О проекте</h1>
+  <p class="section-sub" data-i18n="about_sub">Кто мы и что делаем</p>
+
+  <div class="contact-card" style="text-align: left;">
+    <div class="app-icon" style="margin: 0 auto 20px;">🌊</div>
+    <h3 style="text-align: center; font-size: 28px; margin-bottom: 20px;">Aurionyx</h3>
+    <p style="color: var(--text2); font-size: 16px; line-height: 1.7; margin-bottom: 16px;" data-i18n="about_text1">
+      Aurionyx — независимая студия разработки Android-приложений. Мы создаём красивые, быстрые и бесплатные приложения с уникальным дизайном "жидкое стекло".
+    </p>
+    <p style="color: var(--text2); font-size: 16px; line-height: 1.7;" data-i18n="about_text2">
+      Наша цель — сделать технологии доступными для всех. Без рекламы, без подписок, без слежки.
+    </p>
+  </div>
+
+  <div class="contact-card" style="text-align: left; margin-top: 24px;">
+    <div class="app-icon" style="margin: 0 auto 20px;">👨‍💻</div>
+    <h3 style="text-align: center; margin-bottom: 16px;" data-i18n="about_dev_title">Разработчик</h3>
+    <p style="color: var(--text2); font-size: 15px; line-height: 1.7; text-align: center;" data-i18n="about_dev_text">
+      Все приложения созданы Aurionyx при поддержке AI-инструментов.
+    </p>
+  </div>
+
+  <div class="contact-card" style="margin-top: 24px;">
+    <h3 data-i18n="about_contact">Связаться</h3>
+    <p style="color: var(--text2); margin-bottom: 16px;">📧</p>
+    <a href="mailto:cooolget06@gmail.com">cooolget06@gmail.com</a>
+    <div style="margin-top: 20px;">
+      <a href="mailto:cooolget06@gmail.com" class="btn">✉️ Написать</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aurionyx. <span data-i18n="footer_rights">Все права защищены.</span></p>
+  <p style="margin-top: 8px;" data-i18n="footer_made">Сделано с 💚 Aurionyx</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
