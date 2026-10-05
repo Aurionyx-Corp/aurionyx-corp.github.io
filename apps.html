@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apps — Aurionyx</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+<nav>
+  <a href="index.html" class="logo">🌊 Aurionyx</a>
+  <div class="nav-links">
+    <a href="index.html" data-i18n="nav_home">Главная</a>
+    <a href="apps.html" class="active" data-i18n="nav_apps">Приложения</a>
+    <a href="feedback.html" data-i18n="nav_feedback">Отзывы</a>
+    <a href="support.html" data-i18n="nav_support">Поддержка</a>
+    <a href="about.html" data-i18n="nav_about">О проекте</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" id="themeBtn" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtn" onclick="toggleLang()">RU</button>
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+  <a href="index.html" data-i18n="nav_home">Главная</a>
+  <a href="apps.html" class="active" data-i18n="nav_apps">Приложения</a>
+  <a href="feedback.html" data-i18n="nav_feedback">Отзывы</a>
+  <a href="support.html" data-i18n="nav_support">Поддержка</a>
+  <a href="about.html" data-i18n="nav_about">О проекте</a>
+  <div style="display:flex; gap:12px; margin-top:24px;">
+    <button class="nav-btn" id="themeBtnMobile" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtnMobile" onclick="toggleLang()">RU</button>
+  </div>
+</div>
+
+<section class="section container" style="padding-top: 40px;">
+  <h1 class="section-title" data-i18n="apps_title">Приложения</h1>
+  <p class="section-sub" data-i18n="apps_sub">Наши проекты для Android</p>
+
+  <div class="apps-grid">
+
+    <!-- ===== LAPlayer (Available) ===== -->
+    <div class="app-card">
+      <div class="app-icon">🎵</div>
+      <span class="badge">v2.0</span>
+      <h3>LAPlayer</h3>
+      <div class="version">Liquid Audio Player • Free</div>
+      <p data-i18n="app_laplayer">Музыкальный плеер с виниловой анимацией, 20-полосным эквалайзером и 11 темами.</p>
+      <div style="display:flex; gap:8px; flex-wrap: wrap;">
+        <!-- Замени ссылку ниже на реальную ссылку из GitHub Releases -->
+        <a href="https://github.com/Aurionyx-Corp/aurionyx-corp.github.io/releases" class="btn btn-small" target="_blank" data-i18n="btn_download">Скачать</a>
+      </div>
+    </div>
+
+    <!-- ===== LAIScanner (Coming soon) ===== -->
+    <div class="app-card">
+      <div class="app-icon">📷</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LAIScanner</h3>
+      <div class="version">Liquid AI Scanner • Free</div>
+      <p data-i18n="app_laiscanner">Сканер документов с AI-апскейлом и распознаванием текста.</p>
+      <button class="btn btn-outline btn-small" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+
+    <!-- ===== LAIPDFReader (Coming soon) ===== -->
+    <div class="app-card">
+      <div class="app-icon">📖</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LAIPDFReader</h3>
+      <div class="version">Liquid AI PDF Reader • Free</div>
+      <p data-i18n="app_laipdf">PDF-ридер с AI-помощником и 3D-перелистыванием страниц.</p>
+      <button class="btn btn-outline btn-small" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+
+    <!-- ===== LADevice Tycoon (Coming soon) ===== -->
+    <div class="app-card">
+      <div class="app-icon">🎮</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LADevice Tycoon</h3>
+      <div class="version">Liquid AI Device Tycoon • Free</div>
+      <p data-i18n="app_ladevice">Игра-тайкун: создавай собственные устройства и строй империю.</p>
+      <button class="btn btn-outline btn-small" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aurionyx. <span data-i18n="footer_rights">Все права защищены.</span></p>
+  <p style="margin-top: 8px;" data-i18n="footer_made">Сделано с 💚 Aurionyx</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
