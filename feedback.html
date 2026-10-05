@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback — Aurionyx</title>
+<link rel="stylesheet" href="css/style.css">
+<!-- Firebase SDK (для реального хранения отзывов) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body data-theme="light">
+
+<nav>
+  <a href="index.html" class="logo">🌊 Aurionyx</a>
+  <div class="nav-links">
+    <a href="index.html" data-i18n="nav_home">Главная</a>
+    <a href="apps.html" data-i18n="nav_apps">Приложения</a>
+    <a href="feedback.html" class="active" data-i18n="nav_feedback">Отзывы</a>
+    <a href="support.html" data-i18n="nav_support">Поддержка</a>
+    <a href="about.html" data-i18n="nav_about">О проекте</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" id="themeBtn" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtn" onclick="toggleLang()">RU</button>
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobileMenu()">✕</button>
+  <a href="index.html" data-i18n="nav_home">Главная</a>
+  <a href="apps.html" data-i18n="nav_apps">Приложения</a>
+  <a href="feedback.html" class="active" data-i18n="nav_feedback">Отзывы</a>
+  <a href="support.html" data-i18n="nav_support">Поддержка</a>
+  <a href="about.html" data-i18n="nav_about">О проекте</a>
+  <div style="display:flex; gap:12px; margin-top:24px;">
+    <button class="nav-btn" id="themeBtnMobile" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" id="langBtnMobile" onclick="toggleLang()">RU</button>
+  </div>
+</div>
+
+<section class="section container" style="padding-top: 40px;">
+  <h1 class="section-title" data-i18n="feedback_title">Отзывы</h1>
+  <p class="section-sub" data-i18n="feedback_sub">Поделитесь мнением о наших приложениях</p>
+
+  <div class="feedback-form">
+    <input type="text" id="fbName" placeholder="Ваше имя" data-i18n-ph="ph_name" maxlength="50">
+    <select id="fbRating">
+      <option value="5">⭐⭐⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="1">⭐</option>
+    </select>
+    <textarea id="fbText" placeholder="Ваш отзыв или предложение..." data-i18n-ph="ph_text" maxlength="500"></textarea>
+    <button class="btn" id="fbSubmitBtn" onclick="submitFeedback()" data-i18n="btn_send">Отправить</button>
+  </div>
+
+  <div class="reviews-list" id="reviewsList">
+    <!-- Отзывы загружаются из js/feedback.js -->
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aurionyx. <span data-i18n="footer_rights">Все права защищены.</span></p>
+  <p style="margin-top: 8px;" data-i18n="footer_made">Сделано с 💚 Aurionyx</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/feedback.js"></script>
+</body>
+</html>
