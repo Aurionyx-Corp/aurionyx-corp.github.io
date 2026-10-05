@@ -1,36 +1,613 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Aurionyx</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #F5EDE0, #7FC4BC);
-            font-family: sans-serif;
-            text-align: center;
-            padding: 50px;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .card {
-            background: rgba(255,255,255,0.4);
-            backdrop-filter: blur(20px);
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            max-width: 500px;
-        }
-        h1 { color: #5BA8A0; font-size: 42px; margin: 0; }
-        p { color: #3D2E22; font-size: 18px; margin-top: 12px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurionyx — Android Apps</title>
+<style>
+:root {
+  --sand: #F5EDE0;
+  --foam: #5BA8A0;
+  --turq: #7FC4BC;
+  --text: #3D2E22;
+  --text2: #8A7A6A;
+  --card: rgba(255,255,255,0.55);
+  --border: rgba(255,255,255,0.6);
+  --shadow: 0 8px 32px rgba(91,168,160,0.15);
+}
+[data-theme="dark"] {
+  --sand: #0E1F17;
+  --foam: #4CAF50;
+  --turq: #81C784;
+  --text: #E8F5E9;
+  --text2: #A5C4B0;
+  --card: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.1);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+[data-theme="amoled"] {
+  --sand: #000000;
+  --foam: #4CAF50;
+  --turq: #81C784;
+  --text: #FFFFFF;
+  --text2: #A5C4B0;
+  --card: rgba(76,175,80,0.08);
+  --border: rgba(76,175,80,0.15);
+  --shadow: 0 8px 32px rgba(0,0,0,0.8);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--sand);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, var(--turq), transparent 60%),
+              radial-gradient(circle at 80% 80%, var(--foam), transparent 60%);
+  opacity: 0.3;
+  z-index: -1;
+  animation: flow 20s ease-in-out infinite;
+}
+@keyframes flow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
+}
+nav {
+  position: sticky;
+  top: 12px;
+  margin: 12px auto;
+  max-width: 1100px;
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 100;
+}
+.logo { font-weight: 700; font-size: 18px; color: var(--foam); display: flex; align-items: center; gap: 8px; }
+.nav-right { display: flex; gap: 8px; align-items: center; }
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.nav-btn:hover { background: var(--card); transform: scale(1.05); }
+.hero {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(40px, 8vw, 72px);
+  background: linear-gradient(135deg, var(--foam), var(--turq));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+.hero p {
+  font-size: clamp(16px, 2.5vw, 22px);
+  color: var(--text2);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+.hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  background: linear-gradient(135deg, var(--foam), var(--turq));
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 8px 24px rgba(91,168,160,0.3);
+}
+.btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 32px rgba(91,168,160,0.4); }
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--foam);
+  color: var(--foam);
+  box-shadow: none;
+}
+.btn-outline:hover { background: var(--foam); color: white; }
+section {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+.section-title {
+  font-size: clamp(28px, 5vw, 40px);
+  margin-bottom: 24px;
+  font-weight: 700;
+  color: var(--text);
+}
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.app-card {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.app-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(91,168,160,0.25); }
+.app-icon {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--foam), var(--turq));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+.app-card h3 { font-size: 20px; margin-bottom: 8px; }
+.app-card p { color: var(--text2); font-size: 14px; margin-bottom: 16px; line-height: 1.5; }
+.badge {
+  display: inline-block;
+  background: var(--foam);
+  color: white;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.badge.soon { background: var(--text2); }
+.feedback-form {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.feedback-form input,
+.feedback-form textarea,
+.feedback-form select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.3);
+  color: var(--text);
+  font-size: 15px;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+.feedback-form textarea { min-height: 100px; resize: vertical; }
+.reviews-list { display: flex; flex-direction: column; gap: 12px; }
+.review {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.review-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.review-name { font-weight: 600; }
+.review-stars { color: #FFB800; }
+.review-text { color: var(--text2); font-size: 14px; line-height: 1.5; }
+.review-date { font-size: 12px; color: var(--text2); opacity: 0.7; margin-top: 8px; }
+.faq-item {
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+.faq-item h4 { color: var(--foam); margin-bottom: 8px; }
+.faq-item p { color: var(--text2); font-size: 14px; line-height: 1.6; }
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text2);
+  font-size: 14px;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+footer a { color: var(--foam); text-decoration: none; }
+@media (max-width: 600px) {
+  nav { padding: 10px 14px; border-radius: 16px; }
+  .logo { font-size: 16px; }
+  .nav-btn { padding: 5px 10px; font-size: 12px; }
+  .hero { margin: 24px auto; }
+}
+</style>
 </head>
-<body>
-    <div class="card">
-        <h1>🌊 Aurionyx</h1>
-        <p>Crafting beautiful Android apps.</p>
+<body data-theme="light">
+
+<nav>
+  <div class="logo">🌊 Aurionyx</div>
+  <div class="nav-right">
+    <button class="nav-btn" id="themeBtn" onclick="cycleTheme()">🌙</button>
+    <button class="nav-btn" onclick="toggleLang()" id="langBtn">RU</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1 data-i18n="hero_title">Aurionyx</h1>
+  <p data-i18n="hero_sub">Создаём красивые Android-приложения с душой.</p>
+  <div class="hero-buttons">
+    <a href="#apps" class="btn" data-i18n="btn_apps">📱 Приложения</a>
+    <a href="#feedback" class="btn btn-outline" data-i18n="btn_feedback">💬 Отзывы</a>
+  </div>
+</div>
+
+<section id="apps">
+  <h2 class="section-title" data-i18n="apps_title">📱 Приложения</h2>
+  <div class="apps-grid">
+    <div class="app-card">
+      <div class="app-icon">🎵</div>
+      <span class="badge">v2.0</span>
+      <h3>LAPlayer</h3>
+      <p data-i18n="app_laplayer">Музыкальный плеер с виниловой анимацией, 20-полосным эквалайзером и 11 темами.</p>
+      <a href="https://github.com/Aurionyx-Corp" class="btn" data-i18n="btn_download">Скачать</a>
     </div>
+    <div class="app-card">
+      <div class="app-icon">📷</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LAIScanner</h3>
+      <p data-i18n="app_laiscanner">Сканер документов с AI-апскейлом и распознаванием текста.</p>
+      <button class="btn btn-outline" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">📖</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LAIPDFReader</h3>
+      <p data-i18n="app_laipdf">PDF-ридер с AI-помощником и 3D-перелистыванием страниц.</p>
+      <button class="btn btn-outline" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">🎮</div>
+      <span class="badge soon" data-i18n="badge_soon">Скоро</span>
+      <h3>LADevice Tycoon</h3>
+      <p data-i18n="app_ladevice">Игра-тайкун: создавай собственные устройства и строй империю.</p>
+      <button class="btn btn-outline" disabled data-i18n="btn_soon">В разработке</button>
+    </div>
+  </div>
+</section>
+
+<section id="feedback">
+  <h2 class="section-title" data-i18n="feedback_title">💬 Отзывы</h2>
+  <div class="feedback-form">
+    <input type="text" id="fbName" placeholder="Ваше имя" data-i18n-ph="ph_name">
+    <select id="fbRating">
+      <option value="5">⭐⭐⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="1">⭐</option>
+    </select>
+    <textarea id="fbText" placeholder="Ваш отзыв или предложение..." data-i18n-ph="ph_text"></textarea>
+    <button class="btn" onclick="submitFeedback()" data-i18n="btn_send">Отправить</button>
+  </div>
+  <div class="reviews-list" id="reviewsList"></div>
+</section>
+
+<section id="support">
+  <h2 class="section-title" data-i18n="support_title">📧 Поддержка</h2>
+  <div class="faq-item">
+    <h4 data-i18n="faq1_q">Как связаться с разработчиком?</h4>
+    <p data-i18n="faq1_a">Пишите на email: cooolget06@gmail.com</p>
+  </div>
+  <div class="faq-item">
+    <h4 data-i18n="faq2_q">Где скачать приложения?</h4>
+    <p data-i18n="faq2_a">Скоро APK-файлы появятся в разделе "Приложения".</p>
+  </div>
+  <div class="faq-item">
+    <h4 data-i18n="faq3_q">Приложения бесплатные?</h4>
+    <p data-i18n="faq3_a">Да, все приложения Aurionyx полностью бесплатны, без рекламы и подписок.</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Aurionyx. <span data-i18n="footer_rights">Все права защищены.</span></p>
+  <p style="margin-top: 8px;">Made with 💚 by <a href="mailto:cooolget06@gmail.com">Aurionyx</a></p>
+</footer>
+
+<script>
+const translations = {
+  ru: {
+    hero_title: "Aurionyx",
+    hero_sub: "Создаём красивые Android-приложения с душой.",
+    btn_apps: "📱 Приложения",
+    btn_feedback: "💬 Отзывы",
+    apps_title: "📱 Приложения",
+    app_laplayer: "Музыкальный плеер с виниловой анимацией, 20-полосным эквалайзером и 11 темами.",
+    app_laiscanner: "Сканер документов с AI-апскейлом и распознаванием текста.",
+    app_laipdf: "PDF-ридер с AI-помощником и 3D-перелистыванием страниц.",
+    app_ladevice: "Игра-тайкун: создавай собственные устройства и строй империю.",
+    btn_download: "Скачать",
+    btn_soon: "В разработке",
+    badge_soon: "Скоро",
+    feedback_title: "💬 Отзывы",
+    ph_name: "Ваше имя",
+    ph_text: "Ваш отзыв или предложение...",
+    btn_send: "Отправить",
+    support_title: "📧 Поддержка",
+    faq1_q: "Как связаться с разработчиком?",
+    faq1_a: "Пишите на email: cooolget06@gmail.com",
+    faq2_q: "Где скачать приложения?",
+    faq2_a: "Скоро APK-файлы появятся в разделе \"Приложения\".",
+    faq3_q: "Приложения бесплатные?",
+    faq3_a: "Да, все приложения Aurionyx полностью бесплатны, без рекламы и подписок.",
+    footer_rights: "Все права защищены."
+  },
+  en: {
+    hero_title: "Aurionyx",
+    hero_sub: "Crafting beautiful Android apps with soul.",
+    btn_apps: "📱 Apps",
+    btn_feedback: "💬 Feedback",
+    apps_title: "📱 Apps",
+    app_laplayer: "Music player with vinyl animation, 20-band equalizer, and 11 themes.",
+    app_laiscanner: "Document scanner with AI upscale and text recognition.",
+    app_laipdf: "PDF reader with AI assistant and 3D page flip.",
+    app_ladevice: "Tycoon game: build your own devices and empire.",
+    btn_download: "Download",
+    btn_soon: "Coming soon",
+    badge_soon: "Soon",
+    feedback_title: "💬 Feedback",
+    ph_name: "Your name",
+    ph_text: "Your feedback or suggestion...",
+    btn_send: "Send",
+    support_title: "📧 Support",
+    faq1_q: "How to contact the developer?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Where to download apps?",
+    faq2_a: "APK files will appear in the Apps section soon.",
+    faq3_q: "Are the apps free?",
+    faq3_a: "Yes, all Aurionyx apps are completely free, no ads, no subscriptions.",
+    footer_rights: "All rights reserved."
+  },
+  uk: {
+    hero_title: "Aurionyx",
+    hero_sub: "Створюємо красиві Android-додатки з душею.",
+    btn_apps: "📱 Додатки",
+    btn_feedback: "💬 Відгуки",
+    apps_title: "📱 Додатки",
+    app_laplayer: "Музичний плеєр з вініловою анімацією, 20-смуговим еквалайзером та 11 темами.",
+    app_laiscanner: "Сканер документів з AI-апскейлом і розпізнаванням тексту.",
+    app_laipdf: "PDF-рідер з AI-помічником і 3D-перегортанням сторінок.",
+    app_ladevice: "Гра-тайкун: створюй власні пристрої та імперію.",
+    btn_download: "Завантажити",
+    btn_soon: "У розробці",
+    badge_soon: "Скоро",
+    feedback_title: "💬 Відгуки",
+    ph_name: "Ваше ім'я",
+    ph_text: "Ваш відгук або пропозиція...",
+    btn_send: "Надіслати",
+    support_title: "📧 Підтримка",
+    faq1_q: "Як зв'язатися з розробником?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Де завантажити додатки?",
+    faq2_a: "APK-файли скоро з'являться в розділі \"Додатки\".",
+    faq3_q: "Додатки безкоштовні?",
+    faq3_a: "Так, всі додатки Aurionyx повністю безкоштовні, без реклами.",
+    footer_rights: "Всі права захищені."
+  },
+  be: {
+    hero_title: "Aurionyx",
+    hero_sub: "Ствараем прыгожыя Android-дадаткі з душой.",
+    btn_apps: "📱 Дадаткі",
+    btn_feedback: "💬 Водгукі",
+    apps_title: "📱 Дадаткі",
+    app_laplayer: "Музычны плэер з вінілавай анімацыяй, 20-палосным эквалайзерам і 11 тэмамі.",
+    app_laiscanner: "Сканер дакументаў з AI-апскейлам і распазнаваннем тэксту.",
+    app_laipdf: "PDF-рыдэр з AI-памочнікам і 3D-перагортваннем старонак.",
+    app_ladevice: "Гульня-тайкун: стварай уласныя прылады і імперыю.",
+    btn_download: "Спампаваць",
+    btn_soon: "У распрацоўцы",
+    badge_soon: "Хутка",
+    feedback_title: "💬 Водгукі",
+    ph_name: "Ваша імя",
+    ph_text: "Ваш водгук або прапанова...",
+    btn_send: "Адправіць",
+    support_title: "📧 Падтрымка",
+    faq1_q: "Як звязацца з распрацоўшчыкам?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Дзе спампаваць дадаткі?",
+    faq2_a: "APK-файлы хутка з'явяцца ў раздзеле \"Дадаткі\".",
+    faq3_q: "Дадаткі бясплатныя?",
+    faq3_a: "Так, усе дадаткі Aurionyx цалкам бясплатныя, без рэкламы.",
+    footer_rights: "Усе правы абаронены."
+  },
+  pl: {
+    hero_title: "Aurionyx",
+    hero_sub: "Tworzymy piękne aplikacje Android z duszą.",
+    btn_apps: "📱 Aplikacje",
+    btn_feedback: "💬 Opinie",
+    apps_title: "📱 Aplikacje",
+    app_laplayer: "Odtwarzacz muzyczny z animacją winylu, 20-pasmowym korektorem i 11 motywami.",
+    app_laiscanner: "Skaner dokumentów z AI upscale i rozpoznawaniem tekstu.",
+    app_laipdf: "Czytnik PDF z asystentem AI i przewracaniem stron 3D.",
+    app_ladevice: "Gra tycoon: twórz własne urządzenia i imperium.",
+    btn_download: "Pobierz",
+    btn_soon: "W budowie",
+    badge_soon: "Wkrótce",
+    feedback_title: "💬 Opinie",
+    ph_name: "Twoje imię",
+    ph_text: "Twoja opinia lub sugestia...",
+    btn_send: "Wyślij",
+    support_title: "📧 Wsparcie",
+    faq1_q: "Jak skontaktować się z deweloperem?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Gdzie pobrać aplikacje?",
+    faq2_a: "Pliki APK wkrótce pojawią się w sekcji \"Aplikacje\".",
+    faq3_q: "Czy aplikacje są darmowe?",
+    faq3_a: "Tak, wszystkie aplikacje Aurionyx są całkowicie darmowe, bez reklam.",
+    footer_rights: "Wszelkie prawa zastrzeżone."
+  },
+  kk: {
+    hero_title: "Aurionyx",
+    hero_sub: "Жанды Android қосымшаларын жасаймыз.",
+    btn_apps: "📱 Қосымшалар",
+    btn_feedback: "💬 Пікірлер",
+    apps_title: "📱 Қосымшалар",
+    app_laplayer: "Винил анимациясы, 20 жолақты эквалайзер және 11 тақырыппен музыка ойнатқыш.",
+    app_laiscanner: "AI upscale және мәтінді танумен құжат сканері.",
+    app_laipdf: "AI көмекшісі және 3D бет бұрумен PDF оқырман.",
+    app_ladevice: "Тайкун ойыны: өз құрылғыларыңызды және империяңызды жасаңыз.",
+    btn_download: "Жүктеу",
+    btn_soon: "Әзірленуде",
+    badge_soon: "Жақында",
+    feedback_title: "💬 Пікірлер",
+    ph_name: "Сіздің атыңыз",
+    ph_text: "Сіздің пікіріңіз немесе ұсынысыңыз...",
+    btn_send: "Жіберу",
+    support_title: "📧 Қолдау",
+    faq1_q: "Әзірлеушімен қалай байланысуға болады?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Қосымшаларды қайдан жүктеуге болады?",
+    faq2_a: "APK файлдары жақында \"Қосымшалар\" бөлімінде пайда болады.",
+    faq3_q: "Қосымшалар тегін бе?",
+    faq3_a: "Иә, барлық Aurionyx қосымшалары толығымен тегін, жарнамасыз.",
+    footer_rights: "Барлық құқықтар қорғалған."
+  },
+  bg: {
+    hero_title: "Aurionyx",
+    hero_sub: "Създаваме красиви Android приложения с душа.",
+    btn_apps: "📱 Приложения",
+    btn_feedback: "💬 Отзиви",
+    apps_title: "📱 Приложения",
+    app_laplayer: "Музикален плейър с винил анимация, 20-лентов еквалайзер и 11 теми.",
+    app_laiscanner: "Скенер за документи с AI upscale и разпознаване на текст.",
+    app_laipdf: "PDF четец с AI асистент и 3D прелистване на страници.",
+    app_ladevice: "Игра тайкун: създай свои устройства и империя.",
+    btn_download: "Изтегли",
+    btn_soon: "В разработка",
+    badge_soon: "Скоро",
+    feedback_title: "💬 Отзиви",
+    ph_name: "Вашето име",
+    ph_text: "Вашият отзив или предложение...",
+    btn_send: "Изпрати",
+    support_title: "📧 Поддръжка",
+    faq1_q: "Как да се свържа с разработчика?",
+    faq1_a: "Email: cooolget06@gmail.com",
+    faq2_q: "Откъде да изтегля приложенията?",
+    faq2_a: "APK файловете ще се появят в раздел \"Приложения\" скоро.",
+    faq3_q: "Приложенията безплатни ли са?",
+    faq3_a: "Да, всички приложения на Aurionyx са напълно безплатни, без реклами.",
+    footer_rights: "Всички права запазени."
+  }
+};
+
+let currentLang = 'ru';
+const langs = ['ru', 'en', 'uk', 'be', 'pl', 'kk', 'bg'];
+const langLabels = { ru: 'RU', en: 'EN', uk: 'UA', be: 'BY', pl: 'PL', kk: 'KZ', bg: 'BG' };
+
+function applyLang() {
+  const t = translations[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const key = el.getAttribute('data-i18n-ph');
+    if (t[key]) el.placeholder = t[key];
+  });
+  document.getElementById('langBtn').textContent = langLabels[currentLang];
+  localStorage.setItem('aurionyx_lang', currentLang);
+}
+
+function toggleLang() {
+  const idx = langs.indexOf(currentLang);
+  currentLang = langs[(idx + 1) % langs.length];
+  applyLang();
+}
+
+let themes = ['light', 'dark', 'amoled'];
+let themeIcons = { light: '🌙', dark: '☀️', amoled: '🌑' };
+
+function cycleTheme() {
+  const current = document.body.getAttribute('data-theme') || 'light';
+  const idx = themes.indexOf(current);
+  const next = themes[(idx + 1) % themes.length];
+  document.body.setAttribute('data-theme', next);
+  document.getElementById('themeBtn').textContent = themeIcons[next];
+  localStorage.setItem('aurionyx_theme', next);
+}
+
+function submitFeedback() {
+  const name = document.getElementById('fbName').value.trim() || 'Аноним';
+  const rating = document.getElementById('fbRating').value;
+  const text = document.getElementById('fbText').value.trim();
+  if (!text) { alert('Напишите отзыв!'); return; }
+  const feedbacks = JSON.parse(localStorage.getItem('aurionyx_feedback') || '[]');
+  feedbacks.unshift({ name, rating, text, date: new Date().toLocaleDateString('ru-RU') });
+  localStorage.setItem('aurionyx_feedback', JSON.stringify(feedbacks));
+  document.getElementById('fbName').value = '';
+  document.getElementById('fbText').value = '';
+  renderReviews();
+  alert('Спасибо за отзыв! 💚');
+}
+
+function renderReviews() {
+  const feedbacks = JSON.parse(localStorage.getItem('aurionyx_feedback') || '[]');
+  const list = document.getElementById('reviewsList');
+  if (feedbacks.length === 0) {
+    list.innerHTML = '<p style="color: var(--text2); text-align:center; padding: 20px;">Пока нет отзывов. Будьте первым! 💚</p>';
+    return;
+  }
+  list.innerHTML = feedbacks.map(f => `
+    <div class="review">
+      <div class="review-header">
+        <span class="review-name">${escapeHtml(f.name)}</span>
+        <span class="review-stars">${'⭐'.repeat(parseInt(f.rating))}</span>
+      </div>
+      <div class="review-text">${escapeHtml(f.text)}</div>
+      <div class="review-date">${f.date}</div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('aurionyx_lang');
+  if (savedLang && langs.includes(savedLang)) currentLang = savedLang;
+  applyLang();
+  const savedTheme = localStorage.getItem('aurionyx_theme') || 'light';
+  document.body.setAttribute('data-theme', savedTheme);
+  document.getElementById('themeBtn').textContent = themeIcons[savedTheme];
+  renderReviews();
+});
+</script>
 </body>
 </html>
