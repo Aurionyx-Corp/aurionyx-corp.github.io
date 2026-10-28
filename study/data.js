@@ -32,7 +32,7 @@ const weeklySchedule = {
     ],
     "Четвер": [
         { num: 1, time: "09:00-09:45", subject: "Географія" },
-        { num: 2, time: "09:55-10:40", subject: "Осн. роботи на ПК" },
+        { num: 2, time: "09:55-10:40", subject: "Осн. роботи на ПК" }, // На 29.10 тут будет замена
         { num: 3, time: "10:50-11:35", subject: "Фізика і астрономія" },
         { num: 4, time: "11:55-12:40", subject: "Охорона праці" },
         { num: 5, time: "12:50-13:35", subject: "Історія України" },
@@ -54,8 +54,13 @@ const weeklySchedule = {
 // 2. ЗАМЕНЫ
 // ==========================================
 const substitutions = {
+    // Замена на сегодня (28 октября)
     "2026-10-28": [ 
         { num: 1, subject: "Фізика", oldSubject: "ТКОІ" }
+    ],
+    // НОВАЯ ЗАМЕНА НА ЗАВТРА (29 октября)
+    "2026-10-29": [
+        { num: 2, subject: "Осн. діловеден.", oldSubject: "Осн. роботи на ПК" }
     ]
 };
 
@@ -81,8 +86,8 @@ const teachersList = [
     { name: "Пурій Марія Іванівна", subjects: "Українська мова, Українська література", room: "каб. 20 (2 поверх)" },
     { name: "Клепач Роман Михайлович", subjects: "Всесвітня історія, Історія України, Географія", room: "каб. 21 (2 поверх)" },
     { name: "Тучапський Назар Петрович", subjects: "Фізика і астрономія, ПДР", room: "каб. 22 (2 поверх)" },
-    { name: "Кубай Наталя Йосипівна", subjects: "Виробниче навчання", room: "Майстерня ОКН, каб. 23 (2 поверх 'апендицит')" },
-    { name: "Барна Наталя Ярославівна", subjects: "ТКОІ, Осн. роботи на ПК, Машинопис, Internet", room: "каб. 23/28 (2 поверх 'апендицит')" },
+    { name: "Кубай Наталя Йосипівна", subjects: "Виробниче навчання", room: "Майстерня ОКН, каб. 23 (2 поверх)" },
+    { name: "Барна Наталя Ярославівна", subjects: "ТКОІ, Осн. роботи на ПК, Машинопис, Internet", room: "каб. 23/28 (2 поверх)" },
     { name: "Григоренко О. А.", subjects: "Захист України", room: "каб. 26 (2 поверх)" },
     { name: "Гавран Марія Семенівна", subjects: "Математика", room: "каб. 30 (3 поверх)" },
     { name: "Гендер М. І.", subjects: "Охорона праці", room: "каб. 32 (3 поверх)" },
@@ -90,7 +95,25 @@ const teachersList = [
 ];
 
 // ==========================================
-// 5. РАСПИСАНИЕ ЗВОНКОВ
+// 5. КНИГИ (Библиотека)
+// ==========================================
+const booksList = [
+    { title: "Хімія 11 клас", author: "Попель, Криля", cover: "", file: "Книги/chemistry 11 P. P. Popel, L. S. Krylya (1).pdf" },
+    { title: "Українська мова 10 клас", author: "О. Авраменко", cover: "", file: "Книги/Ukrainian_mova_10_Olexandr_Avramenko_1.pdf" },
+    { title: "Українська література 10 клас", author: "Авраменко, Пахаренко", cover: "", file: "Книги/Ukrainian_literature_10_Olexandr_Avramenko,_Vasil_Pakharenko_1.pdf" },
+    { title: "Географія 10 клас", author: "Кобернік, Коваленко", cover: "", file: "Книги/Gergrafiya_10_S_G_Kobernik,_R_R_Kovalenko_1.pdf" },
+    { title: "Всесвітня історія 10 клас", author: "Ладиченко", cover: "", file: "Книги/World_History_10_TV_Ladychenko_1.pdf" },
+    { title: "Історія України 10 клас", author: "Пометун, Гупан", cover: "", file: "Книги/History_of_Ukraine_10_O_I_Pometun,_N_M_Gupan_1.pdf" },
+    { title: "Фізика 10 клас", author: "Головко та ін.", cover: "", file: "Книги/Physics_10_M_V_Golovko,_Yu_S_Melnyk,_L_V_Neporozhnya,_V_V_Si....pdf" },
+    { title: "Основи охорони праці", author: "Винокуров", cover: "", file: "Книги/Fundamentals of Labor Protection Vynokurov L.E. 2001 1.pdf" },
+    { title: "Біологія 10 клас", author: "Тагліна", cover: "", file: "Книги/Biology 10th grade Taglin (1).pdf" },
+    { title: "Зарубіжна література 10 клас", author: "Ніколенко та ін.", cover: "", file: "Книги/Foreign_Literature_10_O_M_Nikolenko,_O_V_Orlova,_L_L_Kovalyova.pdf" },
+    { title: "Англійська мова 10 клас", author: "Буренко", cover: "", file: "Книги/English 10 V. M. Burenko (1).pdf" },
+    { title: "Математика 10 клас", author: "Бевз", cover: "", file: "Книги/Mathematics_10_G_P_Bevs,_V_G_Bevs_1.pdf" }
+];
+
+// ==========================================
+// 6. РАСПИСАНИЕ ЗВОНКОВ
 // ==========================================
 const regularBells = [
     { num: 1, time: "09:00-09:45", break: "10 хв" },
