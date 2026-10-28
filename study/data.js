@@ -89,18 +89,18 @@ const teachersList = [
 // 5. КНИГИ (Библиотека)
 // ==========================================
 const booksList = [
-    { title: "Хімія 11 клас", author: "Попель, Криля", cover: "", file: "Книги/chemistry 11 P. P. Popel, L. S. Krylya (1).pdf" },
-    { title: "Українська мова 10 клас", author: "О. Авраменко", cover: "", file: "Книги/Ukrainian_mova_10_Olexandr_Avramenko_1.pdf" },
-    { title: "Українська література 10 клас", author: "Авраменко, Пахаренко", cover: "", file: "Книги/Ukrainian_literature_10_Olexandr_Avramenko,_Vasil_Pakharenko_1.pdf" },
-    { title: "Географія 10 клас", author: "Кобернік, Коваленко", cover: "", file: "Книги/Gergrafiya_10_S_G_Kobernik,_R_R_Kovalenko_1.pdf" },
-    { title: "Всесвітня історія 10 клас", author: "Ладиченко", cover: "", file: "Книги/World_History_10_TV_Ladychenko_1.pdf" },
-    { title: "Історія України 10 клас", author: "Пометун, Гупан", cover: "", file: "Книги/History_of_Ukraine_10_O_I_Pometun,_N_M_Gupan_1.pdf" },
-    { title: "Фізика 10 клас", author: "Головко та ін.", cover: "", file: "Книги/Physics_10_M_V_Golovko,_Yu_S_Melnyk,_L_V_Neporozhnya,_V_V_Si....pdf" },
-    { title: "Основи охорони праці", author: "Винокуров", cover: "", file: "Книги/Fundamentals of Labor Protection Vynokurov L.E. 2001 1.pdf" },
-    { title: "Біологія 10 клас", author: "Тагліна", cover: "", file: "Книги/Biology 10th grade Taglin (1).pdf" },
-    { title: "Зарубіжна література 10 клас", author: "Ніколенко та ін.", cover: "", file: "Книги/Foreign_Literature_10_O_M_Nikolenko,_O_V_Orlova,_L_L_Kovalyova.pdf" },
-    { title: "Англійська мова 10 клас", author: "Буренко", cover: "", file: "Книги/English 10 V. M. Burenko (1).pdf" },
-    { title: "Математика 10 клас", author: "Бевз", cover: "", file: "Книги/Mathematics_10_G_P_Bevs,_V_G_Bevs_1.pdf" }
+    { title: "Хімія 11 клас", author: "Попель, Криля", cover: "", file: "books/chemistry%2011%20P.%20P.%20Popel,%20L.%20S.%20Krylya%20(1)%20(1).pdf" },
+    { title: "Українська мова 10 клас", author: "О. Авраменко", cover: "", file: "books/Ukrainian_mova_10_Olexandr_Avramenko_1%20(1).pdf" },
+    { title: "Українська література 10 клас", author: "Авраменко, Пахаренко", cover: "", file: "books/Ukrainian_literature_10_Olexandr_Avramenko,_Vasil_Pakharenko_1_1.pdf" },
+    { title: "Географія 10 клас", author: "Кобернік, Коваленко", cover: "", file: "books/Gergrafiya_10_S_G_Kobernik,_R_R_Kovalenko_1%20(1).pdf" },
+    { title: "Всесвітня історія 10 клас", author: "Ладиченко", cover: "", file: "books/World_History_10_TV_Ladychenko_1%20(1).pdf" },
+    { title: "Історія України 10 клас", author: "Пометун, Гупан", cover: "", file: "books/History_of_Ukraine_10_O_I_Pometun,_N_M_Gupan_1%20(1).pdf" },
+    { title: "Фізика 10 клас", author: "Головко та ін.", cover: "", file: "books/Physics_10_M_V_Golovko,_Yu_S_Melnyk,_L_V_Neporozhnya,_V_V_Sipii.pdf" },
+    { title: "Основи охорони праці", author: "Винокуров", cover: "", file: "books/Fundamentals%20of%20Labor%20Protection%20Vynokurov%20L.E.%202001%201%20(1).pdf" },
+    { title: "Біологія 10 клас", author: "Тагліна", cover: "", file: "books/Biology%2010th%20grade%20Taglin%20(1)%20(1).pdf" },
+    { title: "Зарубіжна література 10 клас", author: "Ніколенко та ін.", cover: "", file: "books/Foreign_Literature_10_O_M_Nikolenko,_O_V_Orlova,_L_L_Kovalyova_1.pdf" },
+    { title: "Англійська мова 10 клас", author: "Буренко", cover: "", file: "books/English%2010%20V.%20M.%20Burenko%20(1)%20(1).pdf" },
+    { title: "Математика 10 клас", author: "Бевз", cover: "", file: "books/Mathematics_10_G_P_Bevs,_V_G_Bevs_1%20(1).pdf" }
 ];
 
 // ==========================================
