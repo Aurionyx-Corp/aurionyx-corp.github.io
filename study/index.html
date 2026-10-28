@@ -77,7 +77,6 @@
         .info-col h3 { font-size: 16px; margin-bottom: 4px; }
         .room-badge { display: inline-block; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 8px; font-size: 11px; margin-top: 4px; font-weight: 600; align-self: flex-start; }
         
-        /* Иконки в бейджах */
         .sub-badge { color: var(--danger); font-size: 12px; font-weight: bold; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
         .sub-badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .old-info { text-decoration: line-through; opacity: 0.5; font-size: 12px; margin-top: 2px; display: block; }
@@ -99,6 +98,13 @@
         .bell-time { flex: 1; font-size: 15px; }
         .bell-break { font-size: 12px; color: var(--text-muted); background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px; }
 
+        /* Карточка учителя */
+        .teacher-card { background: var(--glass); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+        .teacher-card h3 { font-size: 16px; margin-bottom: 6px; color: var(--primary); }
+        .teacher-card .subjects { font-size: 13px; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+        .teacher-card .room { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--accent); background: rgba(129, 199, 132, 0.1); padding: 4px 10px; border-radius: 8px; }
+        .teacher-card .room svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+
         /* ========================================= */
         /* ЖИДКИЙ ДОГ-БАР (LIQUID BOTTOM NAV)        */
         /* ========================================= */
@@ -116,7 +122,8 @@
 
         .nav-blob {
             position: absolute; top: 4px; left: 0;
-            width: calc(100% / 3); height: 56px;
+            /* ТЕПЕРЬ ШИРИНА 1/4, ТАК КАК 4 КНОПКИ */
+            width: calc(100% / 4); height: 56px;
             background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(129, 199, 132, 0.2));
             border: 1px solid rgba(129, 199, 132, 0.4);
             border-radius: 28px;
@@ -130,11 +137,11 @@
         .nav-item {
             position: relative; z-index: 2; flex: 1; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: var(--text-muted); font-size: 11px; cursor: pointer;
+            color: var(--text-muted); font-size: 10px; cursor: pointer;
             transition: color 0.3s, transform 0.3s;
         }
         .nav-item.active { color: var(--text); transform: scale(1.05); }
-        .nav-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s; }
+        .nav-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s; margin-bottom: 2px; }
         .nav-item.active .nav-icon svg { transform: translateY(-2px); }
 
         .screen { display: none; } .screen.active { display: block; animation: fadeIn 0.3s ease; }
@@ -163,7 +170,6 @@
         </div>
         
         <div class="substitution-alert" id="subAlert">
-            <!-- Кастомная SVG иконка предупреждения -->
             <div style="color: #FF5252;">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
@@ -184,6 +190,12 @@
         <div id="bellsList"></div>
     </div>
 
+    <!-- НОВАЯ ВКЛАДКА: ВИКЛАДАЧІ -->
+    <div id="tab-teachers" class="screen">
+        <h2 style="margin-bottom: 15px;">Викладачі</h2>
+        <div id="teachersList"></div>
+    </div>
+
     <div id="tab-settings" class="screen">
         <div class="about-card">
             <h2>LAStudy</h2>
@@ -197,7 +209,7 @@
     </div>
 </div>
 
-<!-- ЖИДКИЙ ДОГ-БАР -->
+<!-- ЖИДКИЙ ДОГ-БАР (4 вкладки) -->
 <div class="liquid-nav-container" id="liquidNav">
     <div class="nav-blob" id="navBlob"></div>
     
@@ -213,7 +225,13 @@
         </span>
         <span>Дзвінки</span>
     </div>
-    <div class="nav-item" data-index="2" onclick="switchTab('settings', this, 2)">
+    <div class="nav-item" data-index="2" onclick="switchTab('teachers', this, 2)">
+        <span class="nav-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </span>
+        <span>Викладачі</span>
+    </div>
+    <div class="nav-item" data-index="3" onclick="switchTab('settings', this, 3)">
         <span class="nav-icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </span>
@@ -224,19 +242,15 @@
 <script src="data.js"></script>
 
 <script>
-    // =========================================
-    // КАСТОМНЫЕ SVG ИКОНКИ ДЛЯ СТАТУСОВ
-    // =========================================
+    // КАСТОМНЫЕ ИКОНКИ
     const ICONS = {
         warning: `<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,
         clock: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`,
         play: `<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`,
-        check: `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+        check: `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+        location: `<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`
     };
 
-    // =========================================
-    // ЛОГИКА РАСПИСАНИЯ
-    // =========================================
     const daysOfWeek = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
     let currentDay = "Понеділок";
     let isShortenedMode = false; 
@@ -250,6 +264,7 @@
         renderDaysNav();
         renderSchedule();
         renderBells(regularBells); 
+        renderTeachers();
         setInterval(updateCardTimes, 60000); 
         
         setTimeout(() => moveBlob(0), 100);
@@ -423,8 +438,31 @@
         }
     }
 
+    // РЕНДЕР УЧИТЕЛЕЙ
+    function renderTeachers() {
+        const list = document.getElementById('teachersList');
+        if (!list) return;
+        list.innerHTML = '';
+        
+        if (typeof teachersList === 'undefined') {
+            list.innerHTML = '<p style="text-align:center; color: var(--text-muted);">Список викладачів оновлюється...</p>';
+            return;
+        }
+
+        teachersList.forEach(teacher => {
+            const card = document.createElement('div');
+            card.className = 'teacher-card';
+            card.innerHTML = `
+                <h3>${teacher.name}</h3>
+                <div class="subjects">${teacher.subjects}</div>
+                <div class="room">${ICONS.location} ${teacher.room}</div>
+            `;
+            list.appendChild(card);
+        });
+    }
+
     // =========================================
-    // ЛОГИКА ЖИДКОГО ДОГ-БАРА
+    // ЛОГИКА ЖИДКОГО ДОГ-БАРА (4 вкладки)
     // =========================================
     const navContainer = document.getElementById('liquidNav');
     const navBlob = document.getElementById('navBlob');
