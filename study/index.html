@@ -361,13 +361,25 @@
         alertBox.classList.remove('show');
 
         const now = new Date();
-        const dateStr = now.toISOString().split('T')[0];
+        
+        // Вычисляем дату для выбранного дня недели
+        const currentDayIndex = daysOfWeek.indexOf(currentDay);
+        const todayIndex = now.getDay() - 1; 
+        const diffDays = currentDayIndex - todayIndex;
+        const targetDate = new Date(now);
+        targetDate.setDate(now.getDate() + diffDays);
+        
+        const yyyy = targetDate.getFullYear();
+        const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(targetDate.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+
         const daySchedule = weeklySchedule[currentDay] || [];
         const todaySubs = substitutions[dateStr];
 
-        if (todaySubs && todaySubs.length > 0 && currentDay === daysOfWeek[now.getDay() - 1]) {
+        if (todaySubs && todaySubs.length > 0) {
             alertBox.classList.add('show');
-            alertText.innerText = `На сьогодні є зміни. Перевірте розклад!`;
+            alertText.innerText = `На цей день є зміни. Перевірте розклад!`;
         }
 
         if (daySchedule.length === 0) {
@@ -377,7 +389,7 @@
 
         daySchedule.forEach((lesson) => {
             let sub = null;
-            if (todaySubs && currentDay === daysOfWeek[now.getDay() - 1]) {
+            if (todaySubs) {
                 sub = todaySubs.find(s => s.num === lesson.num);
             }
 
