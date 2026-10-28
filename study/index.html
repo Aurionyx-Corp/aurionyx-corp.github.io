@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LAStudy - БЦПО 64-ОКА</title>
     
-    <!-- PWA НАСТРОЙКИ -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4CAF50">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,8 +22,6 @@
             --text-muted: #A5C4B0;
             --danger: #FF5252;
         }
-        
-        /* Специальная тема для Дня Независимости */
         body.theme-independence {
             --bg: #0a1930;
             --primary: #0057B7;
@@ -32,10 +29,10 @@
             --glass: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 215, 0, 0.3);
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); background-image: radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.15) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(129, 199, 132, 0.1) 0%, transparent 50%); color: var(--text); min-height: 100vh; display: flex; justify-content: center; transition: background 0.5s; }
-        .app-container { width: 100%; max-width: 430px; padding: 20px 20px 90px 20px; position: relative; }
+        
+        .app-container { width: 100%; max-width: 430px; padding: 20px 20px 130px 20px; position: relative; }
         
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px; }
         .header-title h1 { font-size: 24px; font-weight: 800; }
@@ -48,8 +45,13 @@
         .day-btn { padding: 8px 14px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; flex-shrink: 0; }
         .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .substitution-alert { background: rgba(255, 82, 82, 0.15); border: 1px solid rgba(255, 82, 82, 0.3); backdrop-filter: blur(20px); border-radius: 16px; padding: 16px; margin-bottom: 20px; display: none; animation: pulse 2s infinite alternate; }
-        .substitution-alert.show { display: flex; gap: 12px; }
+        /* НОВЫЙ ПЕРЕКЛЮЧАТЕЛЬ ДНЯ */
+        .schedule-mode-toggle { display: flex; gap: 10px; margin-bottom: 15px; }
+        .schedule-mode-toggle button { flex: 1; padding: 8px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
+        .schedule-mode-toggle button.active { background: rgba(255,255,255,0.15); color: var(--text); border-color: var(--text-muted); }
+
+        .substitution-alert { background: rgba(255, 82, 82, 0.15); border: 1px solid rgba(255, 82, 82, 0.3); backdrop-filter: blur(20px); border-radius: 16px; padding: 16px; margin-bottom: 20px; display: none; animation: pulse 2s infinite alternate; align-items: center; gap: 12px; }
+        .substitution-alert.show { display: flex; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.2); } 100% { box-shadow: 0 0 0 10px rgba(255, 82, 82, 0); } }
         .sub-text h3 { color: var(--danger); font-size: 15px; margin-bottom: 4px; }
         .sub-text p { font-size: 13px; color: var(--text); line-height: 1.4; }
@@ -60,28 +62,27 @@
             position: relative; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s; 
             cursor: pointer; overflow: hidden;
         }
-        .class-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 10;
-        }
+        .class-card:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 10; }
         .class-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); border-radius: 4px 0 0 4px; }
         .class-card.is-sub { background: rgba(255, 82, 82, 0.05); border-color: rgba(255, 82, 82, 0.2); }
         .class-card.is-sub::before { background: var(--danger); }
         
         .time-col { display: flex; flex-direction: column; min-width: 75px; }
         .time-start { font-weight: bold; font-size: 14px; }
+        .time-start.short-time { color: var(--accent); } /* Цвет для сокращенного времени */
         .lesson-num { font-size: 11px; color: var(--text-muted); text-transform: uppercase; }
         
         .info-col { flex: 1; display: flex; flex-direction: column; justify-content: center; }
         .info-col h3 { font-size: 16px; margin-bottom: 4px; }
         .room-badge { display: inline-block; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 8px; font-size: 11px; margin-top: 4px; font-weight: 600; align-self: flex-start; }
-        .sub-badge { color: var(--danger); font-size: 12px; font-weight: bold; margin-top: 4px; display: block; }
+        
+        .sub-badge { color: var(--danger); font-size: 12px; font-weight: bold; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
         .old-info { text-decoration: line-through; opacity: 0.5; font-size: 12px; margin-top: 2px; display: block; }
-
+        
         .time-info {
             max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease;
-            font-size: 12px; color: var(--accent); font-weight: 600; margin-top: 0;
+            font-size: 12px; font-weight: 600; margin-top: 0;
+            display: flex; align-items: center; gap: 6px;
         }
         .class-card:hover .time-info { max-height: 30px; opacity: 1; margin-top: 8px; }
 
@@ -94,7 +95,7 @@
         .bell-time { flex: 1; font-size: 15px; }
         .bell-break { font-size: 12px; color: var(--text-muted); background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px; }
 
-        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 40px); max-width: 390px; background: rgba(20, 30, 25, 0.8); backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 24px; display: flex; justify-content: space-around; padding: 10px 5px; z-index: 100; }
+        .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 40px); max-width: 390px; background: rgba(20, 30, 25, 0.85); backdrop-filter: blur(30px); border: 1px solid var(--glass-border); border-radius: 24px; display: flex; justify-content: space-around; padding: 10px 5px; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; padding: 8px 16px; border-radius: 16px; cursor: pointer; transition: 0.2s; }
         .nav-item.active { color: var(--text); background: rgba(76, 175, 80, 0.2); }
         .nav-icon { font-size: 20px; }
@@ -118,6 +119,13 @@
 
     <div id="tab-schedule" class="screen active">
         <div class="days-nav" id="daysNav"></div>
+        
+        <!-- ПЕРЕКЛЮЧАТЕЛЬ РЕЖИМА -->
+        <div class="schedule-mode-toggle">
+            <button id="btnModeRegular" class="active" onclick="setScheduleMode('regular')">Звичайні</button>
+            <button id="btnModeShort" onclick="setScheduleMode('short')">Скорочені</button>
+        </div>
+
         <div class="substitution-alert" id="subAlert">
             <div style="font-size: 24px;">⚠️</div>
             <div class="sub-text">
@@ -164,6 +172,9 @@
 <script>
     const daysOfWeek = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
     let currentDay = "Понеділок";
+    
+    // Глобальное состояние: сейчас обычные или сокращенные уроки
+    let isShortenedMode = false; 
 
     document.addEventListener('DOMContentLoaded', () => {
         checkHoliday();
@@ -205,6 +216,16 @@
         });
     }
 
+    // НОВАЯ ФУНКЦИЯ: Переключение сокращенного режима
+    function setScheduleMode(mode) {
+        isShortenedMode = (mode === 'short');
+        
+        document.getElementById('btnModeRegular').classList.toggle('active', !isShortenedMode);
+        document.getElementById('btnModeShort').classList.toggle('active', isShortenedMode);
+        
+        renderSchedule();
+    }
+
     function getMinutesText(mins) {
         if (mins % 10 === 1 && mins % 100 !== 11) return `${mins} хвилину`;
         if ([2, 3, 4].includes(mins % 10) && ![12, 13, 14].includes(mins % 100)) return `${mins} хвилини`;
@@ -224,18 +245,19 @@
             
             if (currentDay === daysOfWeek[now.getDay() - 1]) {
                 if (currentMins >= startMins && currentMins < endMins) {
-                    timeInfo.innerText = "🟢 Зараз триває";
+                    const endTimeStr = card.querySelector('.time-start').innerText.split('-')[1];
+                    timeInfo.innerHTML = `🟢 Зараз триває (до ${endTimeStr})`;
                     timeInfo.style.color = "var(--primary)";
                 } else if (currentMins < startMins) {
                     const diff = startMins - currentMins;
-                    timeInfo.innerText = `⏳ До початку ${getMinutesText(diff)}`;
+                    timeInfo.innerHTML = `⏳ До початку ${getMinutesText(diff)}`;
                     timeInfo.style.color = "var(--accent)";
                 } else {
-                    timeInfo.innerText = "✅ Вже закінчилась";
+                    timeInfo.innerHTML = `✅ Вже закінчилась`;
                     timeInfo.style.color = "var(--text-muted)";
                 }
             } else {
-                timeInfo.innerText = ""; 
+                timeInfo.innerHTML = ""; 
             }
         });
     }
@@ -269,8 +291,20 @@
                 sub = todaySubs.find(s => s.num === lesson.num);
             }
 
-            const [startH, startM] = lesson.time.split('-')[0].split(':');
-            const [endH, endM] = lesson.time.split('-')[1].split(':');
+            // ЛОГИКА ВЫБОРА ВРЕМЕНИ (Обычное или Сокращенное)
+            let displayTime = lesson.time;
+            if (isShortenedMode) {
+                // Ищем этот урок в массиве коротких звонков
+                const shortBell = shortBells.find(b => b.num === lesson.num);
+                if (shortBell) {
+                    // Очищаем строку от пробелов, чтобы получить формат 09:00-09:35
+                    displayTime = shortBell.time.replace(/\s+/g, '');
+                }
+            }
+
+            // Парсим время для таймера
+            const [startH, startM] = displayTime.split('-')[0].split(':');
+            const [endH, endM] = displayTime.split('-')[1].split(':');
             const startMins = parseInt(startH) * 60 + parseInt(startM);
             const endMins = parseInt(endH) * 60 + parseInt(endM);
 
@@ -282,7 +316,7 @@
             let html = `
                 <div class="time-col">
                     <span class="lesson-num">${lesson.num} пара</span>
-                    <span class="time-start">${lesson.time}</span>
+                    <span class="time-start ${isShortenedMode ? 'short-time' : ''}">${displayTime}</span>
                 </div>
                 <div class="info-col">
             `;
@@ -344,17 +378,12 @@
     }
 </script>
 
-<!-- РЕГИСТРАЦИЯ PWA (Service Worker) -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
-        .then(registration => {
-          console.log('ServiceWorker зарегистрирован');
-        })
-        .catch(err => {
-          console.log('Ошибка ServiceWorker: ', err);
-        });
+        .then(registration => { console.log('SW OK'); })
+        .catch(err => { console.log('SW Error', err); });
     });
   }
 </script>
