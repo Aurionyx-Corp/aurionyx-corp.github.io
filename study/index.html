@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LAStudy - БЦПО 64-ОКА</title>
     
+    <!-- PWA НАСТРОЙКИ -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4CAF50">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,6 +23,7 @@
             --text-muted: #A5C4B0;
             --danger: #FF5252;
         }
+        
         body.theme-independence {
             --bg: #0a1930;
             --primary: #0057B7;
@@ -29,9 +31,11 @@
             --glass: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 215, 0, 0.3);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); background-image: radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.15) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(129, 199, 132, 0.1) 0%, transparent 50%); color: var(--text); min-height: 100vh; display: flex; justify-content: center; transition: background 0.5s; }
         
+        /* Отступ снизу увеличен до 130px, чтобы меню не перекрывало пары */
         .app-container { width: 100%; max-width: 430px; padding: 20px 20px 130px 20px; position: relative; }
         
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px; }
@@ -45,7 +49,7 @@
         .day-btn { padding: 8px 14px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; flex-shrink: 0; }
         .day-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* НОВЫЙ ПЕРЕКЛЮЧАТЕЛЬ ДНЯ */
+        /* ПЕРЕКЛЮЧАТЕЛЬ ДНЯ */
         .schedule-mode-toggle { display: flex; gap: 10px; margin-bottom: 15px; }
         .schedule-mode-toggle button { flex: 1; padding: 8px; border-radius: 12px; background: var(--glass); border: 1px solid var(--glass-border); color: var(--text-muted); cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; }
         .schedule-mode-toggle button.active { background: rgba(255,255,255,0.15); color: var(--text); border-color: var(--text-muted); }
@@ -172,8 +176,6 @@
 <script>
     const daysOfWeek = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця"];
     let currentDay = "Понеділок";
-    
-    // Глобальное состояние: сейчас обычные или сокращенные уроки
     let isShortenedMode = false; 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -216,7 +218,6 @@
         });
     }
 
-    // НОВАЯ ФУНКЦИЯ: Переключение сокращенного режима
     function setScheduleMode(mode) {
         isShortenedMode = (mode === 'short');
         
@@ -275,7 +276,8 @@
         const daySchedule = weeklySchedule[currentDay] || [];
         const todaySubs = substitutions[dateStr];
 
-        if (todaySubs && todaySubs.length > 0) {
+        // Плашка замен показывается ТОЛЬКО если выбран сегодняшний день
+        if (todaySubs && todaySubs.length > 0 && currentDay === daysOfWeek[now.getDay() - 1]) {
             alertBox.classList.add('show');
             alertText.innerText = `На сьогодні є зміни. Перевірте розклад!`;
         }
@@ -294,15 +296,12 @@
             // ЛОГИКА ВЫБОРА ВРЕМЕНИ (Обычное или Сокращенное)
             let displayTime = lesson.time;
             if (isShortenedMode) {
-                // Ищем этот урок в массиве коротких звонков
                 const shortBell = shortBells.find(b => b.num === lesson.num);
                 if (shortBell) {
-                    // Очищаем строку от пробелов, чтобы получить формат 09:00-09:35
                     displayTime = shortBell.time.replace(/\s+/g, '');
                 }
             }
 
-            // Парсим время для таймера
             const [startH, startM] = displayTime.split('-')[0].split(':');
             const [endH, endM] = displayTime.split('-')[1].split(':');
             const startMins = parseInt(startH) * 60 + parseInt(startM);
