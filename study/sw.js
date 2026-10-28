@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lastudy-v2'; // Обновили версию на v2!
+const CACHE_NAME = 'lastudy-v5'; // Обновили версию на v2!
 const ASSETS = [
   './',
   './index.html',
