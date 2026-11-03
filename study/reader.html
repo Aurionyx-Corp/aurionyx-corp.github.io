@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Читання книги</title>
     
-    <!-- Подключаем PDF.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <style>
@@ -21,7 +20,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--text); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        /* Верхняя панель */
         .top-bar {
             display: flex; align-items: center; justify-content: space-between;
             padding: 15px 20px; background: var(--glass); backdrop-filter: blur(20px);
@@ -37,14 +35,12 @@
         }
         .icon-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        /* Область просмотра */
         .pdf-container {
             flex: 1; overflow-y: auto; overflow-x: auto;
             display: flex; flex-direction: column; align-items: center;
             padding: 20px; gap: 20px; position: relative;
         }
 
-        /* Лоадер */
         .loader {
             border: 4px solid var(--glass-border); border-top: 4px solid var(--primary);
             border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
@@ -52,7 +48,6 @@
         }
         @keyframes spin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-        /* Стили для страниц PDF */
         canvas {
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             border-radius: 8px; background: #fff;
@@ -60,12 +55,8 @@
             transition: filter 0.3s ease;
         }
 
-        /* Режим инверсии (чтобы не слепило глаза) */
-        canvas.inverted {
-            filter: invert(0.9) hue-rotate(180deg);
-        }
+        canvas.inverted { filter: invert(0.9) hue-rotate(180deg); }
 
-        /* Нижняя панель */
         .controls {
             display: flex; justify-content: center; align-items: center; gap: 15px;
             padding: 15px; background: var(--glass); backdrop-filter: blur(20px);
@@ -90,13 +81,11 @@
     <div class="top-bar">
         <a href="index.html" class="back-btn">← Назад</a>
         <div class="title" id="bookTitle">Завантаження...</div>
-        <!-- Кнопка инверсии цветов -->
         <button class="icon-btn" id="invertBtn" onclick="toggleInvert()">🌙</button>
     </div>
 
     <div class="pdf-container" id="pdfContainer">
         <div class="loader" id="loader"></div>
-        <!-- Сюда рендерится PDF -->
     </div>
 
     <div class="controls">
@@ -114,7 +103,7 @@
         let pdfDoc = null;
         let currentPage = 1;
         let isInverted = false;
-        const storageKey = `pdf_last_page_${pdfPath}`; // Уникальный ключ для каждой книги
+        const storageKey = `pdf_last_page_${pdfPath}`;
 
         const container = document.getElementById('pdfContainer');
         const prevBtn = document.getElementById('prevBtn');
@@ -124,13 +113,11 @@
         const loader = document.getElementById('loader');
         const invertBtn = document.getElementById('invertBtn');
 
-        // Красивое имя файла
         if(pdfPath) {
             const fileName = decodeURIComponent(pdfPath.split('/').pop()).replace('.pdf', '').replace(/%20/g, ' ');
             document.getElementById('bookTitle').innerText = fileName;
         }
 
-        // Загрузка книги
         if(pdfPath) {
             loader.style.display = 'block';
             const loadingTask = pdfjsLib.getDocument(pdfPath);
@@ -139,7 +126,6 @@
                 pageTotal.innerText = `/ ${pdfDoc.numPages}`;
                 pageInput.max = pdfDoc.numPages;
                 
-                // Вспоминаем последнюю страницу из памяти
                 const savedPage = localStorage.getItem(storageKey);
                 if (savedPage) {
                     currentPage = parseInt(savedPage);
@@ -153,7 +139,6 @@
             });
         }
 
-        // Отрисовка страницы
         async function renderPage(num) {
             if (!pdfDoc) return;
             container.innerHTML = ''; 
@@ -167,7 +152,6 @@
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
-            // Применяем инверсию, если включена
             if (isInverted) canvas.classList.add('inverted');
 
             container.appendChild(canvas);
@@ -175,20 +159,16 @@
             const renderContext = { canvasContext: context, viewport: viewport };
             await page.render(renderContext).promise;
 
-            // Обновляем интерфейс
             pageInput.value = num;
-            pageInput.innerText = num;
             prevBtn.disabled = (num <= 1);
             nextBtn.disabled = (num >= pdfDoc.numPages);
             
-            // СОХРАНЯЕМ ПРОГРЕСС В ПАМЯТЬ
             localStorage.setItem(storageKey, num);
 
             loader.style.display = 'none';
             container.scrollTop = 0;
         }
 
-        // Кнопки навигации
         function changePage(offset) {
             currentPage += offset;
             if (currentPage < 1) currentPage = 1;
@@ -196,18 +176,16 @@
             renderPage(currentPage);
         }
 
-        // Переход на конкретную страницу
         function jumpToPage(num) {
             let target = parseInt(num);
             if (target >= 1 && target <= pdfDoc.numPages) {
                 currentPage = target;
                 renderPage(currentPage);
             } else {
-                pageInput.value = currentPage; // Сбрасываем, если ввели фигню
+                pageInput.value = currentPage;
             }
         }
 
-        // Переключатель инверсии
         function toggleInvert() {
             isInverted = !isInverted;
             invertBtn.classList.toggle('active', isInverted);
@@ -217,7 +195,6 @@
             }
         }
 
-        // СВАЙПЫ (Перелистывание пальцем)
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -231,13 +208,11 @@
         }, { passive: true });
 
         function handleSwipe() {
-            const swipeThreshold = 50; // Минимальная длина свайпа
+            const swipeThreshold = 50;
             if (touchEndX < touchStartX - swipeThreshold) {
-                // Свайп влево (следующая страница)
                 if (currentPage < pdfDoc.numPages) changePage(1);
             }
             if (touchEndX > touchStartX + swipeThreshold) {
-                // Свайп вправо (предыдущая страница)
                 if (currentPage > 1) changePage(-1);
             }
         }
