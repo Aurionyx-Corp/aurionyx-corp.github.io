@@ -509,7 +509,8 @@
                     <h3>${book.title}</h3>
                     <p>${book.author}</p>
                     <div class="book-actions">
-                        <a href="${book.file}" target="_blank" class="btn-book btn-read">Читати</a>
+                        <!-- ТУТ ИЗМЕНЕНА ССЫЛКА НА ЧИТАЛКУ -->
+                        <a href="reader.html?file=${book.file}" class="btn-book btn-read">Читати</a>
                         <a href="${book.file}" download class="btn-book btn-download">Скачати</a>
                     </div>
                 </div>
