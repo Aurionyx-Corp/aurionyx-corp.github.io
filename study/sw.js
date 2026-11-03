@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lastudy-v9'; // Обновили версию на v2!
+const CACHE_NAME = 'study-v1'; // Обновили название и версию кэша
 const ASSETS = [
   './',
   './index.html',
@@ -8,7 +8,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  self.skipWaiting(); // Принудительно активируем новый Service Worker
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
@@ -19,7 +19,7 @@ self.addEventListener('activate', (e) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key); // Удаляем старый кэш
+          if (key !== CACHE_NAME) return caches.delete(key);
         })
       );
     })
