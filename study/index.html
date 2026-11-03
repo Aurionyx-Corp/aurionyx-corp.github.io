@@ -35,7 +35,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); background-image: radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.15) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(129, 199, 132, 0.1) 0%, transparent 50%); color: var(--text); min-height: 100vh; display: flex; justify-content: center; transition: background 0.5s; overflow-x: hidden; }
         
-        /* Увеличили padding-bottom до 160px, чтобы навигация не наезжала на контент */
         .app-container { width: 100%; max-width: 430px; padding: 20px 20px 160px 20px; position: relative; }
         
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px; transition: 0.3s; }
@@ -120,7 +119,7 @@
         .liquid-nav-container {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: calc(100% - 40px); max-width: 390px; height: 64px;
-            background: rgba(20, 30, 25, 0.85); /* Сделали чуть плотнее фон */
+            background: rgba(20, 30, 25, 0.85);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             border-radius: 32px;
@@ -157,48 +156,43 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
-           АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ И БОЛЬШИХ ЭКРАНОВ
+           УМНАЯ АДАПТАЦИЯ (СЕТКА) ДЛЯ ПЛАНШЕТОВ И АЛЬБОМНОГО РЕЖИМА
            ========================================= */
-        @media (min-width: 768px) {
-            .app-container { max-width: 900px; padding: 40px 40px 160px 40px; }
-            header { margin-bottom: 30px; }
+        @media (min-width: 700px), (orientation: landscape) and (min-height: 400px) {
+            .app-container { max-width: 1100px; padding: 30px 40px 160px 40px; }
+            header { margin-bottom: 20px; }
             .header-title h1 { font-size: 32px; }
             .days-nav { justify-content: center; }
-            .schedule-mode-toggle { max-width: 500px; margin: 0 auto 30px auto; }
-            #scheduleList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .schedule-mode-toggle { max-width: 500px; margin: 0 auto 20px auto; }
+            
+            #scheduleList { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+                gap: 15px; 
+            }
             .class-card { margin-bottom: 0; padding: 20px; }
             .info-col h3 { font-size: 18px; }
             .time-start { font-size: 16px; }
-            .liquid-nav-container { max-width: 600px; height: 70px; bottom: 30px; }
-            .nav-item { font-size: 12px; }
-            #teachersList, #booksList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            
+            .liquid-nav-container { max-width: 600px; height: 70px; bottom: 20px; }
+            #teachersList, #booksList { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+                gap: 15px; 
+            }
             .teacher-card, .book-card { margin-bottom: 0; }
         }
 
-        @media (min-width: 1024px) {
-            .app-container { max-width: 1200px; }
-            #scheduleList { grid-template-columns: 1fr 1fr 1fr; }
-        }
-
-        /* =========================================
-           АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА В АЛЬБОМНОМ РЕЖИМЕ (Landscape)
-           ========================================= */
+        /* Уменьшаем шапку на телефоне в альбомной ориентации */
         @media (max-height: 500px) and (orientation: landscape) {
-            .app-container { padding-top: 10px; padding-bottom: 90px; }
+            .app-container { padding-top: 10px; }
             header { margin-top: 0; margin-bottom: 10px; }
-            .header-title h1 { font-size: 18px; }
-            .header-title p { display: none; } /* Скрываем подзаголовок */
-            .stamp-img { width: 40px; height: 40px; } /* Уменьшаем логотип */
-            
-            .days-nav { margin-bottom: 10px; padding-bottom: 5px; }
-            .day-btn { padding: 6px 10px; font-size: 12px; }
-            .schedule-mode-toggle { margin-bottom: 10px; }
-            .schedule-mode-toggle button { padding: 6px; font-size: 12px; }
-
-            /* Делаем навигацию компактной (только иконки) */
-            .liquid-nav-container { height: 50px; bottom: 10px; width: 90%; max-width: 500px; }
+            .header-title h1 { font-size: 20px; }
+            .header-title p { display: none; }
+            .stamp-img { width: 40px; height: 40px; }
+            .liquid-nav-container { height: 50px; bottom: 10px; }
             .nav-blob { height: 42px; border-radius: 20px; }
-            .nav-item span:not(.nav-icon) { display: none; } /* Скрываем текст */
+            .nav-item span:not(.nav-icon) { display: none; }
             .nav-icon svg { margin-bottom: 0; }
         }
     </style>
@@ -609,7 +603,6 @@
     navContainer.addEventListener('touchend', onDragEnd);
     
     window.addEventListener('resize', () => {
-        // Обновляем ширину при повороте экрана
         const newItemWidth = navContainer.offsetWidth / navItems.length;
         moveBlob(currentIndex);
     });
