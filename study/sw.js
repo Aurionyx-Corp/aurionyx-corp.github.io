@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-v3'; // Версия кэша обновлена
+const CACHE_NAME = 'study-v6'; // Версия кэша обновлена
 const ASSETS = [
   './',
   './index.html',
