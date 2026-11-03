@@ -1,6 +1,6 @@
 {
-  "name": "LAStudy - 64-ОКА",
-  "short_name": "LAStudy",
+  "name": "Study - 64-ОКА",
+  "short_name": "Study",
   "description": "Розклад для групи 64-ОКА БЦПО",
   "start_url": "./index.html",
   "display": "standalone",
