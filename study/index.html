@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LAStudy - БЦПО 64-ОКА</title>
+    <title>Study - БЦПО 64-ОКА</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4CAF50">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Study">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="stamp.png">
 
@@ -127,10 +128,10 @@
             touch-action: none;
         }
 
-        /* ТЕПЕРЬ ДЕЛИМ НА 4 ЧАСТИ */
         .nav-blob {
             position: absolute; top: 4px; left: 0;
-            width: calc(100% / 4); height: 56px;
+            width: calc(100% / 4);
+            height: 56px;
             background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(129, 199, 132, 0.2));
             border: 1px solid rgba(129, 199, 132, 0.4);
             border-radius: 28px;
@@ -153,6 +154,29 @@
 
         .screen { display: none; } .screen.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================
+           АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ
+           ========================================= */
+        @media (min-width: 768px) {
+            .app-container { max-width: 900px; padding: 40px 40px 130px 40px; }
+            header { margin-bottom: 30px; }
+            .header-title h1 { font-size: 32px; }
+            .days-nav { justify-content: center; }
+            .schedule-mode-toggle { max-width: 500px; margin: 0 auto 30px auto; }
+            #scheduleList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .class-card { margin-bottom: 0; padding: 20px; }
+            .info-col h3 { font-size: 18px; }
+            .time-start { font-size: 16px; }
+            .liquid-nav-container { max-width: 600px; height: 70px; bottom: 30px; }
+            #teachersList, #booksList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .teacher-card, .book-card { margin-bottom: 0; }
+        }
+
+        @media (min-width: 1024px) {
+            .app-container { max-width: 1200px; }
+            #scheduleList { grid-template-columns: 1fr 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -160,10 +184,9 @@
 <div class="app-container">
     <header>
         <div class="header-title">
-            <h1>LAStudy</h1>
+            <h1>Study</h1>
             <p>64-ОКА • БЦПО (Стебник)</p>
         </div>
-        <!-- Сюда просто загрузи новую картинку stamp.png -->
         <img src="stamp.png" alt="Logo" class="stamp-img">
     </header>
 
@@ -203,8 +226,6 @@
         <h2 style="margin-bottom: 15px;">Бібліотека</h2>
         <div id="booksList"></div>
     </div>
-
-    <!-- Вкладка налаштувань ПОВНІСТЮ УДАЛЕНА -->
 </div>
 
 <div class="liquid-nav-container" id="liquidNav">
