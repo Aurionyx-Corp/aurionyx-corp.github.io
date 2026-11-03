@@ -127,9 +127,10 @@
             touch-action: none;
         }
 
+        /* ТЕПЕРЬ ДЕЛИМ НА 4 ЧАСТИ */
         .nav-blob {
             position: absolute; top: 4px; left: 0;
-            width: calc(100% / 5); height: 56px;
+            width: calc(100% / 4); height: 56px;
             background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(129, 199, 132, 0.2));
             border: 1px solid rgba(129, 199, 132, 0.4);
             border-radius: 28px;
@@ -152,9 +153,6 @@
 
         .screen { display: none; } .screen.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .about-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 24px; text-align: center; }
-        .btn-tg { background: #229ED9; color: white; text-decoration: none; padding: 12px 24px; border-radius: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; width: 100%; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -165,7 +163,8 @@
             <h1>LAStudy</h1>
             <p>64-ОКА • БЦПО (Стебник)</p>
         </div>
-        <img src="stamp.png" alt="Алкаши" class="stamp-img">
+        <!-- Сюда просто загрузи новую картинку stamp.png -->
+        <img src="stamp.png" alt="Logo" class="stamp-img">
     </header>
 
     <div id="tab-schedule" class="screen active">
@@ -205,17 +204,7 @@
         <div id="booksList"></div>
     </div>
 
-    <div id="tab-settings" class="screen">
-        <div class="about-card">
-            <h2>LAStudy</h2>
-            <p>Додаток для групи <b>64-ОКА</b>.<br>БЦПО (філія м. Стебник).</p>
-            <p style="font-size: 12px; margin-top: 20px;">Розроблено командою <b>Aurionyx</b><br>на замовлення <b>@UwU_OwO3</b></p>
-            <a href="https://t.me/+uTqAdMylt85jYmIy" class="btn-tg" target="_blank">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                Перейти в "Алкаши"
-            </a>
-        </div>
-    </div>
+    <!-- Вкладка налаштувань ПОВНІСТЮ УДАЛЕНА -->
 </div>
 
 <div class="liquid-nav-container" id="liquidNav">
@@ -244,12 +233,6 @@
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         </span>
         <span>Книги</span>
-    </div>
-    <div class="nav-item" data-index="4" onclick="switchTab('settings', this, 4)">
-        <span class="nav-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        </span>
-        <span>Налаштування</span>
     </div>
 </div>
 
@@ -361,8 +344,6 @@
         alertBox.classList.remove('show');
 
         const now = new Date();
-        
-        // Вычисляем дату для выбранного дня недели
         const currentDayIndex = daysOfWeek.indexOf(currentDay);
         const todayIndex = now.getDay() - 1; 
         const diffDays = currentDayIndex - todayIndex;
