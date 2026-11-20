@@ -35,7 +35,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); background-image: radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.15) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(129, 199, 132, 0.1) 0%, transparent 50%); color: var(--text); min-height: 100vh; display: flex; justify-content: center; transition: background 0.5s; overflow-x: hidden; }
         
-        .app-container { width: 100%; max-width: 430px; padding: 20px 20px 160px 20px; position: relative; }
+        .app-container { width: 100%; max-width: 430px; padding: 20px 20px 130px 20px; position: relative; }
         
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 10px; transition: 0.3s; }
         .header-title h1 { font-size: 24px; font-weight: 800; }
@@ -155,9 +155,7 @@
         .screen { display: none; } .screen.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* =========================================
-           УМНАЯ АДАПТАЦИЯ (СЕТКА) ДЛЯ ПЛАНШЕТОВ И АЛЬБОМНОГО РЕЖИМА
-           ========================================= */
+        /* УМНАЯ АДАПТАЦИЯ ДЛЯ ПЛАНШЕТОВ И АЛЬБОМНОГО РЕЖИМА */
         @media (min-width: 700px), (orientation: landscape) and (min-height: 400px) {
             .app-container { max-width: 1100px; padding: 30px 40px 160px 40px; }
             header { margin-bottom: 20px; }
@@ -181,19 +179,6 @@
                 gap: 15px; 
             }
             .teacher-card, .book-card { margin-bottom: 0; }
-        }
-
-        /* Уменьшаем шапку на телефоне в альбомной ориентации */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .app-container { padding-top: 10px; }
-            header { margin-top: 0; margin-bottom: 10px; }
-            .header-title h1 { font-size: 20px; }
-            .header-title p { display: none; }
-            .stamp-img { width: 40px; height: 40px; }
-            .liquid-nav-container { height: 50px; bottom: 10px; }
-            .nav-blob { height: 42px; border-radius: 20px; }
-            .nav-item span:not(.nav-icon) { display: none; }
-            .nav-icon svg { margin-bottom: 0; }
         }
     </style>
 </head>
@@ -429,9 +414,10 @@
             card.dataset.start = startMins;
             card.dataset.end = endMins;
             
+            // ЗДЕСЬ ИЗМЕНЕНО "пара" НА "урок"
             let html = `
                 <div class="time-col">
-                    <span class="lesson-num">${lesson.num} пара</span>
+                    <span class="lesson-num">${lesson.num} урок</span>
                     <span class="time-start ${isShortenedMode ? 'short-time' : ''}">${displayTime}</span>
                 </div>
                 <div class="info-col">
